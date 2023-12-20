@@ -1,0 +1,51 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model MyProWeb.Models.Brand
+
+<section class="content">
+    <div class="card card-primary" style="margin: 10px">
+        <div class="card-header" style="background-color: #17a2b8;">
+            <h3 class="card-title" style="color:white">Update Brand</h3>
+        </div>
+
+        <form asp-action="Edit" asp-route-IdBrand="@Model.Idbrand" enctype="multipart/form-data">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="NameBrand" class="control-label"></label>
+                    <input asp-for="NameBrand" class="form-control" />
+                    <span asp-validation-for="NameBrand" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImgBrand" class="control-label"></label>
+                    <textarea asp-for="ImgBrand" class="form-control" rows="3" placeholder="Image links..."></textarea>
+                    <span asp-validation-for="ImgBrand" class="text-danger"></span>
+                </div>
+                <div class="card-footer row">
+                    <button asp-for="Idbrand" type="submit" style="width: 150px" class="btn btn-info">Update</button>
+                    <a asp-area="Admin" asp-controller="Brand" asp-action="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary ">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+
+    </script>
+}

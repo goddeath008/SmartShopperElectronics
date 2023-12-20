@@ -1,0 +1,51 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model MyProWeb.Models.Brand
+<div class="card card-primary">
+    <div class="card-header">
+
+        <h3 class="card-title" style="color:white">Create New Brand</h3>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NameBrand" class="control-label"></label>
+                <input asp-for="NameBrand" placeholder="Brand Name" class="form-control" />
+                <span asp-validation-for="NameBrand" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgBrand" class="control-label"></label>
+                <textarea asp-for="ImgBrand" class="form-control" rows="3" placeholder="Link Image"></textarea>
+                <span asp-validation-for="ImgBrand" class="text-danger"></span>
+            </div>
+
+
+            <div class="card-footer row">
+                <button type="submit" style="width: 150px" class="btn btn-primary">Create</button>
+                <a asp-controller="Brand" asp-action="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary ">Come Back</a>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+
+    </script>
+}
