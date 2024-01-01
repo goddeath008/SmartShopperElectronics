@@ -30,6 +30,18 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ImgPro)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdbrandNavigation.NameBrand)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdbrandNavigation.NameBrand)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdcateNavigation.NameCate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdcateNavigation.NameCate)
+        </dd>
         <br />
         <dd class="col-sm-10">
             <img src="@Model.ImgPro"/>

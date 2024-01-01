@@ -2,10 +2,17 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.EntityFrameworkCore;
 using MyProWeb.Data;
 using MyProWeb.Models;
-using System.Data.Entity;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using EFCoreExtensions = Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions;
+
+
 
 namespace MyProWeb.Areas.Admin.Controllers
 {
@@ -23,7 +30,8 @@ namespace MyProWeb.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var a = _context.Products
-                
+               .Include(a=>a.IdbrandNavigation)
+               .Include(a=>a.IdcateNavigation)
                 .ToList();
          
             return View(a);
@@ -39,6 +47,8 @@ namespace MyProWeb.Areas.Admin.Controllers
             }
 
             var product = _context.Products
+                .Include(a=>a.IdbrandNavigation)
+                .Include(a=>a.IdcateNavigation)
                 .FirstOrDefault(m => m.Idpro == id);
 
             if (product == null)
@@ -51,33 +61,50 @@ namespace MyProWeb.Areas.Admin.Controllers
 
 
         // GET: ProductController/Create
+        // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["BrandId"] = new SelectList(_context.Brands, "IdBrand", "NameBrand");
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "IdCate", "NameCate");
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Idbrand", "NameBrand");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Idcate", "NameCate");
+            ViewData["UserId"] = new SelectList(_context.Users, "Iduser", "UserName");
+
             return View();
         }
 
         // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product product)
+        public IActionResult Create(Product product)
         {
-
-            if (ModelState.IsValid)
+            try
             {
-                var tempProduct = _context.Products.Add(product).Entity;
-                _context.SaveChanges();
-               
-                TempData["Success"] = "Create Successfully";
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    ViewData["BrandId"] = new SelectList(_context.Brands, "Idbrand", "NameBrand", product.Idbrand);
+                    ViewData["CategoryId"] = new SelectList(_context.Categories, "Idcate", "NameCate", product.Idcate);
+                    ViewData["UserId"] = new SelectList(_context.Users, "Iduser", "UserName", product.Iduser);
+
+                    _context.Products.Add(product);
+                    _context.SaveChanges();
+
+                    TempData["Success"] = "Create Successfully";
+                    return RedirectToAction("Index");
+                }
+
+                // If ModelState is not valid, return to the Create view with validation errors
+                return View(product);
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "IdBrand", "NameBrand", product.Idbrand);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "IdCate", "NameCate", product.Idcate);
-            TempData["Error"] = "Wrong!";
-            return View(product);
+            catch (Exception ex)
+            {
+                // Log the exception for debugging and troubleshooting
+                TempData["Error"] = "An error occurred while creating the product.";
+
+                // If an error occurs, return to the Create view with an error message
+                ViewData["BrandId"] = new SelectList(_context.Brands, "Idbrand", "NameBrand");
+                ViewData["CategoryId"] = new SelectList(_context.Categories, "Idcate", "NameCate");
+                ViewData["UserId"] = new SelectList(_context.Users, "Iduser", "UserName");
+                return View(product);
+            }
         }
 
         // GET: ProductController/Edit/5
