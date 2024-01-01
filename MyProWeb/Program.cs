@@ -9,11 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 //add dbcontext
 builder.Services.AddDbContext<ThaimcqlGodContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ThaimcqlGodContext")));
-builder.Services.AddDbContext<AuthenDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AuthenDbContext")));
 //Add Identity DB
-builder.Services.AddIdentity<UserAD, IdentityRole>()
-    .AddEntityFrameworkStores<AuthenDbContext>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

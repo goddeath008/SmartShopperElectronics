@@ -28,7 +28,7 @@
 
             <div class="card-footer row">
                 <button type="submit" style="width: 150px" class="btn btn-primary">Create</button>
-                <a asp-controller="Brand" asp-action="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary ">Come Back</a>
+                <a asp-controller="Brand" asp-action="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary ">Back</a>
             </div>
 
         </div>
@@ -36,16 +36,4 @@
 </div>
 
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <script type="text/javascript">
-        $(".custom-file-input").on("change", function () {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
 
-
-    </script>
-}

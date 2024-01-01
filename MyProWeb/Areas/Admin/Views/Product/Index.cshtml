@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<MyProWeb.Models.Product>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Product Manage</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active"><a asp-controller="Procut" asp-action="Index">Product Manage</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <section class="content" style="padding-top: 10px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <a asp-controller="Product" asp-action="Create" class="card-tools btn bg-gradient-primary">
+                            <i class="fa-regular fa-plus fa-2xs"></i> Create a new product
+                        </a>
+                    </div>
+                    <div class="uk-padding-small col-12">
+                        <form asp-action="Search" method="get">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="input-group input-group-sm mt-2" style="width: 250px;">
+                                <select name="brandId" class="form-control">
+                                    Thương hiệu
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                    <th>Brand</th>
+                                   
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr style="align-content: center; justify-content:center;">
+                                        <td>@item.Idpro</td>
+
+
+                                        <td>@Html.DisplayFor(modelItem => item.NamePro)</td>
+                                        <td>
+                                            @if (item.Idcate != null)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.IdcateNavigation.NameCate)
+                                            }
+                                        </td>
+                                        <td>@item.Price.ToString().TrimEnd('0').TrimEnd('.') VNĐ</td>
+                                        <td>
+                                            @if (item.ImgPro != null)
+                                            {
+
+                                                <img style="width: 100px; height: 100px" src="@item.ImgPro" alt="@item.NamePro" />
+                                            }
+                                            else
+                                            {
+                                                <!-- Hiển thị một hình ảnh mặc định nếu không có hình ảnh -->
+                                                <img src="~/images/avatar.jpg" alt="Không có hình ảnh" />
+                                            }
+
+                                        </td>
+                                        
+                                        <td>
+                                            @if (item.Idbrand != null)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.IdbrandNavigation.NameBrand)
+                                            }
+                                        </td>
+
+
+                                        <td>
+                                            <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Idpro"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Update</a>
+
+
+                                            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Idpro"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>Details</a>
+
+
+                                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Idpro"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!Model.Any())
+                                {
+                                    <tr>
+                                        <td colspan="13">Không tìm thấy sản phẩm nào.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+@*                         <partial name="_pager" model="@pager" />
+ *@                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+

@@ -34,9 +34,8 @@ namespace MyProWeb.Areas.Admin.Controllers
         {
 
 
-            if (ModelState.IsValid){
-
-
+            if (ModelState.IsValid)
+            {
                 _context.Brands.Add(model);
                 _context.SaveChanges();
                 TempData["Success"] = "Create succesfully!";
