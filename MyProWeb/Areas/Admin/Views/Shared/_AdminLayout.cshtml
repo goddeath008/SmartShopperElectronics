@@ -77,20 +77,29 @@
                             <span class="hide-menu">COMPONENTS</span>
                         </li>
                         
+                        
                         <li class="sidebar-item">
-                            <a asp-area="Admin" asp-controller="Brand" asp-action="Index"  aria-expanded="false">
+                            <a asp-area="Admin" asp-controller="Brand" asp-action="Index" class="sidebar-link"  aria-expanded="false">
                                 <span>
                                     <i class="ti ti-tag"></i>
                                 </span>
-                                <span class="hide-menu">Brands</span>
+                                <span class="hide-menu">Brand</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="sidebar-link" aria-expanded="false">
                                 <span>
-                                    <i class="ti ti-alert-circle"></i>
+                                    <i class="ti ti-shopping-cart"></i>
                                 </span>
-                                <span class="hide-menu">Alerts</span>
+                                <span class="hide-menu">Category</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="sidebar-link" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-user"></i>
+                                </span>
+                                <span class="hide-menu">User</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
