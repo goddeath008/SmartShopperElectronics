@@ -86,14 +86,32 @@ namespace MyProWeb.Areas.Admin.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Idbrand", "NameBrand");
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Idcate", "NameCate");
-            ViewData["UserId"] = new SelectList(_context.Users, "Iduser", "UserName");
+            // Kiểm tra xem các bảng `Brands`, `Categories`, và `Users` có chứa dữ liệu hay không.
+            if (_context.Brands.Count() == 0)
+            {
+                TempData["Error"] = "Thêm dữ liệu vào bảng Brands trước khi tạo sản phẩm.";
+                return View();
+            }
+            if (_context.Categories.Count() == 0)
+            {
+                TempData["Error"] = "Thêm dữ liệu vào bảng Categories trước khi tạo sản phẩm.";
+                return View();
+            }
+            if (_context.Users.Count() == 0)
+            {
+                TempData["Error"] = "Thêm dữ liệu vào bảng Users trước khi tạo sản phẩm.";
+                return View();
+            }
+
+            // Điền các danh sách vào đối tượng ViewBag
+            ViewBag.BrandId = new SelectList(_context.Brands, "Idbrand", "NameBrand");
+            ViewBag.CategoryId = new SelectList(_context.Categories, "Idcate", "NameCate");
+            ViewBag.UserId = new SelectList(_context.Users, "Iduser", "UserName");
 
             return View();
         }
 
-        // POST: Products/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Product product)
@@ -102,9 +120,9 @@ namespace MyProWeb.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    ViewData["BrandId"] = new SelectList(_context.Brands, "Idbrand", "NameBrand", product.Idbrand);
-                    ViewData["CategoryId"] = new SelectList(_context.Categories, "Idcate", "NameCate", product.Idcate);
-                    ViewData["UserId"] = new SelectList(_context.Users, "Iduser", "UserName", product.Iduser);
+                    ViewBag.BrandId = new SelectList(_context.Brands, "Idbrand", "NameBrand", product.Idbrand);
+                    ViewBag.CategoryId = new SelectList(_context.Categories, "Idcate", "NameCate", product.Idcate);
+                    ViewBag.UserId = new SelectList(_context.Users, "Iduser", "UserName", product.Iduser);
 
                     _context.Products.Add(product);
                     _context.SaveChanges();
@@ -122,9 +140,9 @@ namespace MyProWeb.Areas.Admin.Controllers
                 TempData["Error"] = "An error occurred while creating the product.";
 
                 // If an error occurs, return to the Create view with an error message
-                ViewData["BrandId"] = new SelectList(_context.Brands, "Idbrand", "NameBrand");
-                ViewData["CategoryId"] = new SelectList(_context.Categories, "Idcate", "NameCate");
-                ViewData["UserId"] = new SelectList(_context.Users, "Iduser", "UserName");
+                ViewBag.BrandId = new SelectList(_context.Brands, "Idbrand", "NameBrand");
+                ViewBag.CategoryId = new SelectList(_context.Categories, "Idcate", "NameCate");
+                ViewBag.UserId = new SelectList(_context.Users, "Iduser", "UserName");
                 return View(product);
             }
         }
