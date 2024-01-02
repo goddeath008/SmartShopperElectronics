@@ -2,8 +2,9 @@
 @using Microsoft.AspNetCore.Identity;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-
+    
 }
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,8 +21,15 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit-icons.min.js"></script>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
+    <link href="~/lib/apexcharts/dist/apexcharts.css" rel="stylesheet" />
     <link rel="stylesheet" href="path/to/font-awesome.min.css">
+    <script src="~/lib/apexcharts/dist/apexcharts.amd.js"></script>
+    <script src="~/lib/apexcharts/dist/apexcharts.common.js"></script>
+    <script src="~/lib/apexcharts/dist/apexcharts.esm.js"></script>
+    <script src="~/lib/apexcharts/dist/apexcharts.js"></script>
+    <script src="~/lib/apexcharts/dist/apexcharts.min.js"></script>
+    <link href="~/lib/apexcharts/src/assets/apexcharts.css" rel="stylesheet" />
+    <script src="~/lib/apexcharts/src/apexcharts.js"></script>
     <script src="~/admin/assets/js/adminlte.js" ></script>
     <script src="~/admin/assets/js/sidebarmenu.js" ></script>
     <!-- Google Font: Source Sans Pro -->
@@ -79,7 +87,9 @@
                         
                         
                         <li class="sidebar-item">
+
                             <a asp-area="Admin" asp-controller="Brand" asp-action="Index" class="sidebar-link"  aria-expanded="false">
+
                                 <span>
                                     <i class="ti ti-tag"></i>
                                 </span>
@@ -103,11 +113,11 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="sidebar-link"  aria-expanded="false">
                                 <span>
-                                    <i class="ti ti-cards"></i>
+                                    <i class="ti ti-apple"></i>
                                 </span>
-                                <span class="hide-menu">Card</span>
+                                <span class="hide-menu">Product</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
