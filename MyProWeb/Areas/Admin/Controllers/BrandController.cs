@@ -20,6 +20,21 @@ namespace MyProWeb.Areas.Admin.Controllers
             var list = _context.Brands.ToList();
             return View(list);
         }
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            IQueryable<Brand> query = _context.Brands;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.NameBrand.Contains(searchTerm));
+            }
+
+            List<Brand> searchResults =  query.ToList(); // Lấy kết quả tìm kiếm
+            ViewBag.SearchTerm = searchTerm;
+
+
+            return View("Index", searchResults); // Truyền kết quả tìm kiếm vào trang Index
+        }
+
         // GET: BrandController/Create
         public ActionResult Create()
         {

@@ -33,8 +33,30 @@ namespace MyProWeb.Areas.Admin.Controllers
                .Include(a=>a.IdbrandNavigation)
                .Include(a=>a.IdcateNavigation)
                 .ToList();
-         
+            ViewBag.Brands =  _context.Brands.ToList();
             return View(a);
+        }
+        public async Task<IActionResult> Search(string searchTerm, int? brandId)
+        {
+            IQueryable<Product> query = _context.Products;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.NamePro.Contains(searchTerm));
+            }
+
+            if (brandId.HasValue)
+            {
+                query = query.Where(p => p.Idbrand == brandId);
+            }
+
+            var products = await query
+                .Include(p => p.IdbrandNavigation)
+                .Include(p => p.IdcateNavigation)                
+                .ToListAsync();
+
+           
+
+            return View("Index", products);
         }
 
         // GET: ProductController/Details/5

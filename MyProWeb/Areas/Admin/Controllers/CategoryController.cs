@@ -21,7 +21,20 @@ namespace MyProWeb.Areas.Admin.Controllers
             var list = _context.Categories.ToList();
             return View(list);
         }
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            IQueryable<Category> query = _context.Categories;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.NameCate.Contains(searchTerm));
+            }
 
+            List<Category> searchResults = query.ToList(); // Lấy kết quả tìm kiếm
+            ViewBag.SearchTerm = searchTerm;
+
+
+            return View("Index", searchResults); // Truyền kết quả tìm kiếm vào trang Index
+        }
         // GET: CategoryController/Create
         public ActionResult Create()
         {
