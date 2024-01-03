@@ -1,0 +1,76 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Linq;
+@model IEnumerable<MyProWeb.Models.Product>
+
+<!-- phần nội dung -->
+<div class="flex-box">
+    <div class="left">
+        @foreach (var item in Model.Take(1))
+        {
+            <div class="big-img">
+                <img src="@item.ImgPro" alt="@item.NamePro" width="500" height="500" />
+            </div>
+        }
+       
+
+    </div>
+
+    <div class="right">
+        @foreach (var b in Model.Take(1))
+        {
+            <div class="pname">@b.NamePro</div>
+            <div class="ratings">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="price"><p>@b.Price<sup>đ</sup></p></div>
+        }
+        <div class="btn-box">
+            <!-- <button class="cart-btn">Add to Cart</button>
+            <button class="buy-btn">Buy Now</button>
+            <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Button</button> -->
+            <button class="uk-button uk-button-custom">Add to cart</button>
+            <button class="uk-button uk-button-custom">Watch product</button>
+            <a asp-controller="Filter" asp-action="Index" class="btn btn-outline-dark uk-button uk-button-custom">Back</a>
+
+        </div>
+        <div class="details">
+            <p class="detail-heading" onclick="toggleDetails()">DETAILS</p>
+            @foreach (var a in Model.Take(1))
+            {
+                <div class="detail-content">
+
+                    <p class="detail-text">
+                        <a href="#">@a.NamePro</a> by <a href="#">@a.IdbrandNavigation.NameBrand</a>
+                    </p>
+                    <div class="norword">
+                        <p>Good product</p>
+
+
+                    </div>
+
+                </div>
+
+            }
+        </div>
+
+    </div>
+
+
+
+    <script>
+        let bigImg = document.querySelector('.big-img img');
+        function showImg(pic) {
+            bigImg.src = pic;
+        }
+    </script>
+
+</div>

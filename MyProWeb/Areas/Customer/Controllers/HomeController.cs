@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyProWeb.Data;
 using MyProWeb.Models;
 using MyProWeb.Models.Domain;
@@ -21,7 +22,10 @@ namespace MyProWeb.Areas.Guests.Controllers
         }
         public IActionResult Index()
         {
-            var list = _context.Brands.ToList();
+            var list = _context.Products
+                .Include(a=>a.IdbrandNavigation)
+                .Include(a=>a.IdcateNavigation)
+                .ToList();
             return View(list);
         }
         public IActionResult test()

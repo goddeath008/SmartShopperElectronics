@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MyProWeb.Areas.Customer.Repository;
 using MyProWeb.Data;
 using MyProWeb.Models.Domain;
 
@@ -9,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 //add dbcontext
 builder.Services.AddDbContext<ThaimcqlGodContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ThaimcqlGodContext")));
+//add Repository
+builder.Services.AddScoped<IDanhMucSPRepository, DanhMucSPRepository>();
+
 //Add Identity DB
 var app = builder.Build();
 
