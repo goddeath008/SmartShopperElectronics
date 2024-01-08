@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProWeb.Data;
-using MyProWeb.Models;
 using MyProWeb.Models.Domain;
 using System.Diagnostics;
 
