@@ -4,7 +4,7 @@ using MyProWeb.Data;
 using MyProWeb.Models.Domain;
 using System.Diagnostics;
 
-namespace MyProWeb.Areas.Guests.Controllers
+namespace MyProWeb.Areas.Customer.Controllers
 {
     [Area("Customer")]    
 
