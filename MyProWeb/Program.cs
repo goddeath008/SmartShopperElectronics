@@ -10,16 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 //add dbcontext
 builder.Services.AddDbContext<ThaimcqlGodContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ThaimcqlGodContext")));
-builder.Services.AddDbContext<AuThenDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AuthenDbContext")));
-//add Repository
+/*builder.Services.AddDbContext<AuThenDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AuthenDbContext")));
+*///add Repository
 builder.Services.AddScoped<IDanhMucSPRepository, DanhMucSPRepository>();
 
 //Dang ky Identity
-builder.Services.AddIdentity<AppUser, IdentityRole>()
-    .AddEntityFrameworkStores<AuThenDbContext>()
-    .AddDefaultTokenProviders();
 
-builder.Services.Configure<IdentityOptions>(options => {
+
+/*builder.Services.Configure<IdentityOptions>(options => {
     // Thiết lập về Password
     options.Password.RequireDigit = false; // Không bắt phải có số
     options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
@@ -43,7 +41,7 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
 
 });
-
+*/
 //Add Identity DB
 var app = builder.Build();
 
