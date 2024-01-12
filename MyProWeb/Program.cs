@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MyProWeb.Areas.Customer.Repository;
 using MyProWeb.Data;
 using MyProWeb.Models.Domain;
+using System;
 using System.Configuration;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Authentication.Cookies;
-
 
 namespace MyProWeb
 {
@@ -19,56 +21,63 @@ namespace MyProWeb
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            //add dbcontext
+
+            // Add DbContexts
             builder.Services.AddDbContext<ThaimcqlGodContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ThaimcqlGodContext")));
             builder.Services.AddDbContext<AuthenDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AuthenDbContext")));
-            //add Repository
+
+            // Add Repository
             builder.Services.AddScoped<IDanhMucSPRepository, DanhMucSPRepository>();
 
-            //Dang ky Identity
-            builder.Services.AddIdentity<AppUser, IdentityRole>()
+            // Register Identity
+            /*builder.Services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AuthenDbContext>()
-                .AddDefaultTokenProviders();
-            /*builder.Services.AddOptions();
-            var mailseting = Configuration.GetSection("MailSettings");
-            builder.Services.Configure<MailSettings>(mailseting);
+                .AddDefaultTokenProviders();*/
+            builder.Services.AddDefaultIdentity<AppUser>()
+            .AddEntityFrameworkStores<AuthenDbContext>()
+            .AddDefaultTokenProviders();
+
+
+            builder.Services.AddOptions();
+            var mailSettings = builder.Configuration.GetSection("MailSettings");
+            builder.Services.Configure<MailSettings>(mailSettings);
             builder.Services.AddSingleton<IEmailSender, SendMailService>();
-            */
+
+
+            // Add Razor Pages
             builder.Services.AddRazorPages();
+
+            // Configure Identity Options
             builder.Services.Configure<IdentityOptions>(options =>
             {
-                // Thiết lập về Password
-                options.Password.RequireDigit = false; // Không bắt phải có số
-                options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
-                options.Password.RequireNonAlphanumeric = false; // Không bắt ký tự đặc biệt
-                options.Password.RequireUppercase = false; // Không bắt buộc chữ in
-                options.Password.RequiredLength = 3; // Số ký tự tối thiểu của password
-                options.Password.RequiredUniqueChars = 1; // Số ký tự riêng biệt
+                // Password settings
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 1;
 
-                // Cấu hình Lockout - khóa user
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Khóa 5 phút
-                options.Lockout.MaxFailedAccessAttempts = 5; // Thất bại 5 lầ thì khóa
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
 
-                // Cấu hình về User.
-                options.User.AllowedUserNameCharacters = // các ký tự đặt tên user
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = true;  // Email là duy nhất
+                // User settings
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
 
-                // Cấu hình đăng nhập.
-                options.SignIn.RequireConfirmedEmail = true;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
-                options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
-
+                // SignIn settings
+                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
             });
 
-            //Add Identity DB
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -80,17 +89,13 @@ namespace MyProWeb
             app.UseAuthentication();
             app.UseAuthorization();
 
-
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
             app.MapRazorPages();
 
-
             app.Run();
-
         }
     }
-
 }

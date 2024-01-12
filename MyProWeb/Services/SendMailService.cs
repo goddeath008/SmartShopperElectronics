@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Threading.Tasks;
 using MailKit.Security;
 using Microsoft.Extensions.Logging;
@@ -32,7 +32,7 @@ public class SendMailService : IEmailSender
     }
 
     // Gửi email, theo nội dung trong mailContent
-    
+
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
         var message = new MimeMessage();
@@ -70,4 +70,4 @@ public class SendMailService : IEmailSender
 
         logger.LogInformation("send mail to " + email);
     }
-}*/
+}

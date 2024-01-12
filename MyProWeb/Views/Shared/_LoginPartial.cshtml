@@ -2,29 +2,48 @@
 @using MyProWeb.Models.Domain;
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
-
-    <ul class="navbar-nav">
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="uk-navbar-right">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">
-                Welcome @UserManager.GetUserName(User)!    
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logut</a>
-        </li>
+
+        <a class="uk-navbar-item uk-link-muted tm-navbar-button"
+           href="cart.html"
+           uk-toggle="target: #cart-offcanvas"
+           onclick="return false">
+            <span uk-icon="cart"></span><span class="uk-badge">2</span>
+        </a>
+
+        <a asp-area="Identity" asp-page="/Account/Manage/Index"  class="uk-navbar-item uk-link-muted tm-navbar-button" uk-icon="user"></a>
+        <div class="uk-padding-small uk-margin-remove"
+             uk-dropdown="pos: bottom-right; offset: -10; delay-hide: 200;"
+             style="min-width: 150px">
+            <ul class="uk-nav uk-dropdown-nav">
+                <li>
+                    <a href="account.html">Orders <span>(2)</span></a>
+                </li>
+                <li>
+                    <a href="favorites.html">Favorites <span>(3)</span></a>
+                </li>
+                <li>
+                    <a href="personal.html">Personal</a>
+                </li>
+                <li>
+                    <a href="settings.html">Settings</a>
+                </li>
+                <li class="uk-nav-divider"></li>
+                <li><a asp-area="Identity" asp-page="/Account/Logout">Log out</a></li>
+            </ul>
+        </div>
     }
     else
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
+
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+
+
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+
     }
-   
-    </ul>
 
-
+</div>

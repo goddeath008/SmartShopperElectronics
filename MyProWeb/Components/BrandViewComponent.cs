@@ -2,13 +2,14 @@
 using MyProWeb.Data;
 using System.ComponentModel;
 
-namespace MyProWeb.Areas.Customer.Components
+namespace MyProWeb.Components
 {
     public class BrandViewComponent : ViewComponent
     {
         private readonly ThaimcqlGodContext _context;
 
-        public BrandViewComponent(ThaimcqlGodContext context) {
+        public BrandViewComponent(ThaimcqlGodContext context)
+        {
             _context = context;
         }
         public IViewComponentResult Invoke()

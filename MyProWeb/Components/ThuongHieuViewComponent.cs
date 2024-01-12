@@ -1,19 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyProWeb.Data;
+using SQLitePCL;
 
-namespace MyProWeb.Areas.Customer.Components
+namespace MyProWeb.Components
 {
-    public class CategoryViewComponent : ViewComponent
+    public class ThuongHieuViewComponent : ViewComponent
     {
         private readonly ThaimcqlGodContext _context;
 
-        public CategoryViewComponent(ThaimcqlGodContext context)
+        public ThuongHieuViewComponent(ThaimcqlGodContext context)
         {
             _context = context;
         }
         public IViewComponentResult Invoke()
         {
-            var list = _context.Categories.ToList();
+            var list = _context.Brands.OrderBy(b => b.NameBrand).ToList();
             return View(list);
         }
     }
