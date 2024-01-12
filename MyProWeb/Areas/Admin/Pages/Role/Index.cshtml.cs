@@ -16,7 +16,7 @@ namespace MyProWeb.Areas.Admin.Pages.Role
         public List<IdentityRole> roles { get; set; }
         public async Task OnGet()
         {
-            roles = await _roleManager.Roles.ToListAsync();
+            roles = await _roleManager.Roles.OrderBy(a=>a.Name).ToListAsync();
         }
         public void OnPost() => RedirectToPage();
     }
