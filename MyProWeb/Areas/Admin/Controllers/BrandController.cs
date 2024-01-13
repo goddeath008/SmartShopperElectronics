@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MyProWeb.Data;
 using MyProWeb.Models;
@@ -7,6 +8,7 @@ namespace MyProWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/Proweb/brand/{action}")]
+    [Authorize(Roles = "Admin, Editer, Manager, ThaiMC")]
     public class BrandController : Controller
     {
         private readonly ThaimcqlGodContext _context;
@@ -59,6 +61,7 @@ namespace MyProWeb.Areas.Admin.Controllers
             return View(model);
         }
         // GET: BrandController/Delete/5
+        [Authorize(Policy ="ThaiMC")]
         public ActionResult Delete(int id)
         {
             var brand = _context.Brands.Find(id);
@@ -91,6 +94,7 @@ namespace MyProWeb.Areas.Admin.Controllers
             TempData["Success"] = "Delete Succesfully!";
             return RedirectToAction("Index");
         }
+        [Authorize(Policy = "Editor")]
         public ActionResult Edit(int id)
         {
             var brand = _context.Brands.Find(id);

@@ -33,7 +33,35 @@ namespace MyProWeb
             builder.Services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AuthenDbContext>()
                 .AddDefaultTokenProviders();
-
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/login/";
+                options.LogoutPath = "/logout";
+                options.AccessDeniedPath = "/CantAccess";
+            });
+            builder.Services.AddAuthorization(options => {
+                options.AddPolicy("Manager", policyBuilder => {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.RequireRole("Manager");
+                });
+                options.AddPolicy("ThaiMC", policyBuilder => {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.RequireRole("Manager");
+                    policyBuilder.RequireRole("Admin");
+                    policyBuilder.RequireRole("Editor");
+                    policyBuilder.RequireRole("ThaiMC");
+                });
+                options.AddPolicy("Admin", policyBuilder => {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.RequireRole("Admin");
+                    policyBuilder.RequireRole("Editor");
+                });
+                options.AddPolicy("Editor", policyBuilder => {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.RequireRole("Editor");
+                    policyBuilder.RequireRole("Admin");
+                });
+            });
 
 
 

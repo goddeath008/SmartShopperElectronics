@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProWeb.Data;
@@ -8,6 +9,7 @@ namespace MyProWeb.Areas.Customer.Controllers
 {
     [Area("Customer")]
     [Route("customer/Myproweb/filter/{action}")]
+    [Authorize]
     public class FilterController : Controller
     {
         private readonly ThaimcqlGodContext _context;

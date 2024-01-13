@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using EFCoreExtensions = Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -18,6 +19,7 @@ namespace MyProWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/Proweb/product/{action}")]
+    [Authorize(Policy = "Manager")]
     public class ProductController : Controller
     {
         private readonly ThaimcqlGodContext _context;
@@ -148,7 +150,7 @@ namespace MyProWeb.Areas.Admin.Controllers
         }
 
         // GET: ProductController/Edit/5
-
+        [Authorize(Policy = "Editor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -209,6 +211,7 @@ namespace MyProWeb.Areas.Admin.Controllers
 
 
         // GET: ProductController/Delete/5
+        [Authorize(Policy = "ThaiMC")]
         public IActionResult Delete(int? id)
         {
             if (id == null || _context.Products == null)

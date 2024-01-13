@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MyProWeb.Data;
 using MyProWeb.Models;
@@ -7,6 +8,7 @@ namespace MyProWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/Proweb/Category/{action}")]
+    [Authorize(Policy ="Manager")]
     public class CategoryController : Controller
     {
         private readonly ThaimcqlGodContext _context;
@@ -56,7 +58,7 @@ namespace MyProWeb.Areas.Admin.Controllers
             }
             return View(model);
         }
-
+        [Authorize(Policy ="ThaiMC")]
         // GET: CategoryController/Delete/5
         public ActionResult Delete(int id)
         {
@@ -89,7 +91,7 @@ namespace MyProWeb.Areas.Admin.Controllers
             TempData["Success"] = "Delete Successfully!";
             return RedirectToAction("Index");
         }
-
+        [Authorize(Policy ="Editor")]
         public ActionResult Edit(int id)
         {
             var category = _context.Categories.Find(id);

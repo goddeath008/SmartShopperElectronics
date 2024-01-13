@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,6 +8,7 @@ using MyProWeb.Data;
 
 namespace MyProWeb.Areas.Admin.Pages.Role
 {
+    [Authorize(Policy = "ThaiMC")]
     public class IndexModel : RolePageModel
     {
         public IndexModel(RoleManager<IdentityRole> roleManager, AuthenDbContext context) : base(roleManager, context)
