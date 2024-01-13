@@ -19,9 +19,19 @@
     {
         <tr>
             <td>@user.UserName</td>
-            <td>@user.RoleNames</td>
             <td>
-                <a class="btn btn-primary btn-sm" asp-page="./AddRole" asp-route-id="@user.Id">Add Role</a>
+                @if (string.IsNullOrEmpty(user.RoleNames))
+                {
+                    <a class="text-dark" asp-page="./AddRole" asp-route-id="@user.Id"><i class="fas fa-plus"></i> Role</a>
+                }
+                else
+                {
+                    <a  asp-page="./AddRole" asp-route-id="@user.Id">@user.RoleNames</a>
+                }
+                
+            </td>
+            <td>
+                
                 <a class="btn btn-success btn-sm" asp-page="./SetPassword" asp-route-id="@user.Id">Set Password</a>
                
             </td>
