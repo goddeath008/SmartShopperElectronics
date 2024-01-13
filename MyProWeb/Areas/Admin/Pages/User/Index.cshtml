@@ -19,9 +19,10 @@
     {
         <tr>
             <td>@user.UserName</td>
-            <td></td>
+            <td>@user.RoleNames</td>
             <td>
                 <a class="btn btn-primary btn-sm" asp-page="./AddRole" asp-route-id="@user.Id">Add Role</a>
+                <a class="btn btn-success btn-sm" asp-page="./SetPassword" asp-route-id="@user.Id">Set Password</a>
                
             </td>
         </tr>

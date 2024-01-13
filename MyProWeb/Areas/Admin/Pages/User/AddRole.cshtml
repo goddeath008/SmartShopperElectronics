@@ -1,0 +1,35 @@
+﻿@page "/admin/assign-user-role/{id}"
+@model AddRoleModel
+@{
+    ViewData["Title"] = "Set Role";
+    
+}
+
+<h2>Add Role for member: @Model.user.UserName</h2>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="row">
+    <div class="col-md-6">
+        <form id="set-password-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                @Html.ListBoxFor(m => m.RoleNames, @Model.allRoles,new{
+                    id="id-select-roles",
+                    @class="form-control"
+                })
+                <label asp-for="RoleNames" class="form-label"></label>
+                <span asp-validation-for="RoleNames" class="text-danger"></span>
+            </div>
+           
+            <div class="form-floating mb-3">
+                <button type="submit" class="btn btn-outline-success">Update</button>
+                <a class="btn btn-outline-primary" asp-page="./Index">List Members</a>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
