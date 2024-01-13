@@ -1,0 +1,40 @@
+﻿@page "/admin/members"
+@model MyProWeb.Areas.Admin.Pages.User.IndexModel
+@{
+    ViewData["Title"] = "List Members!";
+}
+
+<h2> @ViewData["Title"]</h2>
+
+<partial name="_StatusMessage" model="@Model.StatusMessage" />
+<p>Total Users: @Model.totalUsers</p>
+
+ <table class="table">
+     <tr>
+        <th>User Name</th>
+        <th>Role Name</th>
+        <th>Actions</th>
+     </tr>
+    @foreach(var user in Model.users)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td></td>
+            <td>
+                <a class="btn btn-primary btn-sm" asp-page="./AddRole" asp-route-id="@user.Id">Add Role</a>
+               
+            </td>
+        </tr>
+    }
+</table>
+@{
+    var pagingModel = new XTL.Helpers.PagingModel()
+            {
+                currentPage = Model.CurrentPage,
+                countPage = Model.CountPages,
+                generaUrl = (int? p) => Url.Page("./Index", new { p = p })
+
+
+            };
+}
+<partial name="_PagingXTL" model="@pagingModel" />

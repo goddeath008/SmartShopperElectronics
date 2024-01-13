@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+
 using MyProWeb.Areas.Customer.Repository;
 using MyProWeb.Data;
 using MyProWeb.Models.Domain;
 using System;
-using System.Configuration;
+
 
 namespace MyProWeb
 {
@@ -30,12 +30,12 @@ namespace MyProWeb
             builder.Services.AddScoped<IDanhMucSPRepository, DanhMucSPRepository>();
 
             // Register Identity
-            /*builder.Services.AddIdentity<AppUser, IdentityRole>()
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AuthenDbContext>()
-                .AddDefaultTokenProviders();*/
-            builder.Services.AddDefaultIdentity<AppUser>()
-            .AddEntityFrameworkStores<AuthenDbContext>()
-            .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders();
+
+
+
 
 
             builder.Services.AddOptions();

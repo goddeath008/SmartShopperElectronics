@@ -2,7 +2,6 @@
 @using MyProWeb.Models.Domain;
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <div class="uk-navbar-right">
     @if (SignInManager.IsSignedIn(User))
     {
