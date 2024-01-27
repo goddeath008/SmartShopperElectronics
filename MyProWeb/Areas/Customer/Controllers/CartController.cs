@@ -72,7 +72,7 @@ namespace MyProWeb.Areas.Customer.Controllers
             }
             return RedirectToAction("Index");
         }
-        [HttpPost]
+       
         public IActionResult RemoveFromCart(int id, string type)
         {
             var myCart = Carts;
@@ -83,8 +83,9 @@ namespace MyProWeb.Areas.Customer.Controllers
                 if (item != null)
                 {
                     myCart.Remove(item);
-                    HttpContext.Session.Set("giohang", myCart);
+                    
                 }
+                HttpContext.Session.Set("giohang", myCart);
                 return Json(new { success = true });
             }
             else
