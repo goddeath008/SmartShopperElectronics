@@ -23,10 +23,12 @@ namespace MyProWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly ThaimcqlGodContext _context;
+        private readonly AuthenDbContext _authenDbContext;
 
-       public ProductController(ThaimcqlGodContext context)
+        public ProductController(ThaimcqlGodContext context, AuthenDbContext authenDbContext)
         {
             _context = context;
+            _authenDbContext= authenDbContext;
         }
         // GET: ProductController
         public ActionResult Index()
@@ -99,16 +101,12 @@ namespace MyProWeb.Areas.Admin.Controllers
                 TempData["Error"] = "Thêm dữ liệu vào bảng Categories trước khi tạo sản phẩm.";
                 return View();
             }
-            if (_context.Users.Count() == 0)
-            {
-                TempData["Error"] = "Thêm dữ liệu vào bảng Users trước khi tạo sản phẩm.";
-                return View();
-            }
+           
 
             // Điền các danh sách vào đối tượng ViewBag
             ViewBag.BrandId = new SelectList(_context.Brands, "Idbrand", "NameBrand");
             ViewBag.CategoryId = new SelectList(_context.Categories, "Idcate", "NameCate");
-            ViewBag.UserId = new SelectList(_context.Users, "Iduser", "UserName");
+          
 
             return View();
         }
@@ -166,9 +164,8 @@ namespace MyProWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            ViewData["BrandId"] = new SelectList(_context.Brands, "IdBrand", "NameBrand", product.Idbrand);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "IdCate", "NameCate", product.Idcate);
-
+            ViewBag.BrandId = new SelectList(_context.Brands, "Idbrand", "NameBrand");
+            ViewBag.CategoryId = new SelectList(_context.Categories, "Idcate", "NameCate");
             return View(product);
         }
 
@@ -188,6 +185,9 @@ namespace MyProWeb.Areas.Admin.Controllers
             {
                 try
                 {
+                    ViewBag.BrandId = new SelectList(_context.Brands, "Idbrand", "NameBrand", product.Idbrand);
+                    ViewBag.CategoryId = new SelectList(_context.Categories, "Idcate", "NameCate", product.Idcate);
+                  
                     _context.Update(product);
                      _context.SaveChanges();
 
@@ -203,8 +203,9 @@ namespace MyProWeb.Areas.Admin.Controllers
                 }
             }
 
-            ViewData["BrandId"] = new SelectList(_context.Brands, "IdBrand", "NameBrand", product.Idbrand);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "IdCate", "NameCate", product.Idcate);
+            ViewBag.BrandId = new SelectList(_context.Brands, "Idbrand", "NameBrand", product.Idbrand);
+            ViewBag.CategoryId = new SelectList(_context.Categories, "Idcate", "NameCate", product.Idcate);
+          
             TempData["Error"] = "Wrong!";
             return View(product);
         }
