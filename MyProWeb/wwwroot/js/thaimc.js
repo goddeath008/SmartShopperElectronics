@@ -28,6 +28,7 @@
         });
     });
 });
+
 $(document).ready(function () {
     $(".ajax-add-to-cartt").click(function () {
         var quantity = $(this).closest('form').find('[name="SoLuong"]').val();

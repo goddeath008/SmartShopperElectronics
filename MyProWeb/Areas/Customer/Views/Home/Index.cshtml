@@ -32,7 +32,7 @@
                                                 <span class="uk-label uk-label-warning">top selling</span><span class="uk-label uk-label-danger">trade-in</span>
                                             </div>
                                             <figure class="tm-media-box-wrap">
-                                                <img src="@item.ImgPro"
+                                                    <img style="border-radius: 20px" src="@item.ImgPro"
                                                      alt='@item.NamePro' />
                                             </figure>
                                         </a>
@@ -362,3 +362,10 @@
     </main>
 </div>
 
+@section Scripts {
+
+    @{
+
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
