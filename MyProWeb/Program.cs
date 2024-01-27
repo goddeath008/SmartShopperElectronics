@@ -74,6 +74,7 @@ namespace MyProWeb
 
             // Add Razor Pages
             builder.Services.AddRazorPages();
+            builder.Services.AddSession();
 
             // Configure Identity Options
             builder.Services.Configure<IdentityOptions>(options =>
@@ -113,6 +114,7 @@ namespace MyProWeb
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();

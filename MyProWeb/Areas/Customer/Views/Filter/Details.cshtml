@@ -2,75 +2,90 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    
 }
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using System.Linq;
-@model IEnumerable<MyProWeb.Models.Product>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+@model MyProWeb.Models.Product
 
 <!-- phần nội dung -->
-<div class="flex-box">
-    <div class="left">
-        @foreach (var item in Model.Take(1))
-        {
-            <div class="big-img">
-                <img src="@item.ImgPro" alt="@item.NamePro" width="500" height="500" />
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="@Model.ImgPro" alt="@Model.NamePro" class="img-fluid">
             </div>
-        }
-       
+            <div class="col-md-6">
+                <h2 class="text-black">@Model.NamePro</h2>
+                
+                <p>
+                    <strong class="text-primary h4">
+                        @Model.Price.Value.ToVND()
+                    </strong>
+                </p>
 
-    </div>
-
-    <div class="right">
-        @foreach (var b in Model.Take(1))
-        {
-            <div class="pname">@b.NamePro</div>
-            <div class="ratings">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="price"><p>@b.Price<sup>đ</sup></p></div>
-        }
-        <div class="btn-box">
-            <!-- <button class="cart-btn">Add to Cart</button>
-            <button class="buy-btn">Buy Now</button>
-            <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Button</button> -->
-            <button class="uk-button uk-button-custom">Add to cart</button>
-            <button class="uk-button uk-button-custom">Watch product</button>
-            <a asp-controller="Filter" asp-action="Index" class="btn btn-outline-dark uk-button uk-button-custom">Back</a>
-
-        </div>
-        <div class="details">
-            <p class="detail-heading" onclick="toggleDetails()">DETAILS</p>
-            @foreach (var a in Model.Take(1))
-            {
-                <div class="detail-content">
-
-                    <p class="detail-text">
-                        <a href="#">@a.NamePro</a> by <a href="#">@a.IdbrandNavigation.NameBrand</a>
-                    </p>
-                    <div class="norword">
-                        <p>Good product</p>
-
+                <form asp-area="Customer" asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.Idpro">
+                    <div class="mb-5">
+                        <div class="input-group mb-3" style="max-width: 120px;">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                            </div>
+                            <input type="text" class="form-control text-center" value="1" name="SoLuong" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                            </div>
+                        </div>
 
                     </div>
-
-                </div>
-
-            }
+                    <p><button type="button" data-id="@Model.Idpro" class="ajax-add-to-cart buy-now btn  btn-outline-success">Add To Cart</button>
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary text-center">Home</a>
+                        <a asp-area="Customer" asp-controller="Filter" asp-action="Index" class="btn btn-outline-secondary text-center">Back</a>
+                    </p>
+                </form>
+                <br /><br /><br /><br /><br /><br />
+            </div>
         </div>
-
     </div>
-
-
-
-    <script>
-        let bigImg = document.querySelector('.big-img img');
-        function showImg(pic) {
-            bigImg.src = pic;
-        }
-    </script>
-
 </div>
+@section Scripts {
+                <script>
+                $(document).ready(function () {
+                    $(".ajax-add-to-cart").click(function(){
+                var quantity = $(this).closest('form').find('[name="SoLuong"]').val();
+
+                        $.ajax({
+                            url: "/customer/Myproweb/cart/AddToCart",
+                            data: {
+                                id: $(this).data("id"),
+                                SoLuong: quantity,
+                                type: "ajax"
+                            },
+                            success: function(data){
+                                Swal.fire({
+                            
+                                    icon: "success",
+                                    title: "Add To Cart Successfully!",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            },
+                            error: function(){
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Failed!",
+                                    text: "Something went wrong!",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        });
+                    });
+                });
+            </script>
+
+    @{
+
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

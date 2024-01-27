@@ -43,18 +43,18 @@ namespace MyProWeb.Areas.Customer.Controllers
 
             return View(lstSp);
         }
-        public IActionResult SPTheoBrand(int loaiSp)
+        public IActionResult SPTheoBrand(int loaiBrand)
         {
             List<Product> lstSp = _context.Products
                 .Include(x => x.IdcateNavigation)
                 .Include(x => x.IdbrandNavigation)
-                .Where(x => x.IdbrandNavigation.Idbrand == loaiSp)
+                .Where(x => x.IdbrandNavigation.Idbrand == loaiBrand)
                 .OrderBy(x => x.NamePro).ToList();
             if (lstSp == null || lstSp.Count == 0)
             {
                 ViewBag.Empty = "Empty Product!!!";
             }
-            var aidi = _context.Brands.Where(x => x.Idbrand == loaiSp).Select(x => x.NameBrand).FirstOrDefault();
+            var aidi = _context.Brands.Where(x => x.Idbrand == loaiBrand).Select(x => x.NameBrand).FirstOrDefault();
 
             ViewBag.TenDanhMuc = aidi;
 
@@ -62,12 +62,13 @@ namespace MyProWeb.Areas.Customer.Controllers
         }
         public IActionResult Details(int id)
         {
-            var list = _context.Products
-                .Include(x => x.IdbrandNavigation)
-                .Include(x => x.IdcateNavigation)
-                .Where(x => x.Idpro == id)
-                .ToList();
-            return View(list);
+            var item = _context.Products.SingleOrDefault(hh => hh.Idpro == id);
+            if (item != null)
+            {
+                return View(item);
+            }
+
+            return RedirectToAction("Index");
         }
 
     }

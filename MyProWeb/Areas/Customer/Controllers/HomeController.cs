@@ -21,6 +21,7 @@ namespace MyProWeb.Areas.Customer.Controllers
         }
         public async Task<IActionResult>  Index()
         {
+            
             var list = _context.Products
                 .Include(a=>a.IdbrandNavigation)
                 .Include(a=>a.IdcateNavigation)

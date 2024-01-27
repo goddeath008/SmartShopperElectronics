@@ -1,16 +1,25 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using MyProWeb.Models.Domain;
+ @using MyProWeb.Helpers
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 <div class="uk-navbar-right">
     @if (SignInManager.IsSignedIn(User))
     {
 
-        <a class="uk-navbar-item uk-link-muted tm-navbar-button"
-           href="cart.html"
-           uk-toggle="target: #cart-offcanvas"
-           onclick="return false">
-            <span uk-icon="cart"></span><span class="uk-badge">2</span>
+        <a  class="uk-navbar-item uk-link-muted tm-navbar-button"
+           asp-area="Customer" asp-controller="Cart" asp-action="Index"
+           uk-toggle="target: #cart-offcanvas">
+            <span id="cart-count" uk-icon="cart"></span><span class="uk-badge">
+               @{
+                    var data = Context.Session.Get<List<CartModel>>("giohang");
+                    if (data == null)
+                    {
+                        data = new List<CartModel>();
+                    }
+                 }
+                 @data.Count()
+            </span>
         </a>
 
         <a asp-area="Identity" asp-page="/Account/Manage/Index"  class="uk-navbar-item uk-link-muted tm-navbar-button" uk-icon="user"></a>
