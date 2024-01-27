@@ -9,17 +9,13 @@
         <h3 class="card-title" style="color:white">Delete Category</h3>
     </div>
     <dl class="card-body">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NameCate)
-        </dt>
-        <dd class="col-sm-10">
+       
+        <dd style="position: center; font-size: 30px" class="col-sm-10">
             @Html.DisplayFor(model => model.NameCate)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ImgCate)
-        </dt>
+       
         <dd class="col-sm-10">
-            <img src="@Model.ImgCate" alt="@(Model.NameCate)" asp-append-version="true" style="width: 150px; height: 150px;">
+            <img src="@Model.ImgCate" alt="@(Model.NameCate)" asp-append-version="true" style="border-radius:20px;width: 150px; height: 150px;">
         </dd>
 
     </dl>

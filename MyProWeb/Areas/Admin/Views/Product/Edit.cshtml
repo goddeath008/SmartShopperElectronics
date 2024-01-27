@@ -15,7 +15,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Idpro" />
             <div class="form-group">
-                <label asp-for="NamePro" class="control-label"></label>
+                <label  class="control-label">Name Product</label>
                 <input asp-for="NamePro" class="form-control" />
                 <span asp-validation-for="NamePro" class="text-danger"></span>
             </div>
@@ -25,15 +25,15 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdcateNavigation.NameCate" class="control-label"></label>
+                <label  class="control-label">Name Category</label>
                 <select asp-for="Idcate" class="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Idbrand" class="control-label"></label>
+                <label  class="control-label">Name Brand</label>
                 <select asp-for="Idbrand" class="form-control" asp-items="ViewBag.BrandId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ImgPro" class="control-label"></label>
+                <label  class="control-label">Link Image</label>
                 <input asp-for="ImgPro" class="form-control" />
                 <span asp-validation-for="ImgPro" class="text-danger"></span>
             </div>

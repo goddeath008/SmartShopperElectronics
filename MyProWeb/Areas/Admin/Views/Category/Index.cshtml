@@ -49,7 +49,7 @@
                                     <td>@a.Idcate</td>
                                     <td>@(a.NameCate ?? "Tên không có sẵn")</td>
 
-                                    <td><img style="width: 80px; height: 80px;" src="@a.ImgCate" alt="@a.NameCate"></td>
+                                    <td><img style="border-radius:20px;width: 80px; height: 80px;" src="@a.ImgCate" alt="@a.NameCate"></td>
                                     <td>
                                         <a asp-controller="Category" asp-action="Edit" asp-route-id="@a.Idcate" class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Update</a>
                                         <a asp-controller="Category" asp-action="Delete" asp-route-id="@a.Idcate" class="btn btn-danger"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Delete</a>

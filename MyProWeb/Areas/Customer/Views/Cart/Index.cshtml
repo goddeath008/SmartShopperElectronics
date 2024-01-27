@@ -50,7 +50,7 @@
                                         <td>@item.Total</td>
                                         <td>
                                             <!-- Trong view hiển thị giỏ hàng -->
-                                            <button type="button" class="btn btn-danger btn-remove-from-cart" data-id="@item.IdProduct">Remove</button>
+                                            <button type="button" class="ajax-remove btn btn-danger " data-id="@item.IdProduct">Remove</button>
                                         </td>
                                     </tr>
                                 }
@@ -127,7 +127,7 @@
     <!-- Trong phần Scripts của view -->
     <script>
         $(document).ready(function () {
-            $(".btn-remove-from-cart").click(function () {
+            $(".ajax-remove").click(function () {
                 var productId = $(this).data("id");
 
                 $.ajax({
@@ -136,7 +136,7 @@
                         id: productId,
                         type: "ajax"
                     },
-                    dataType: "json",
+                    
                     success: function (data) {
                         Swal.fire({
                             icon: "success",

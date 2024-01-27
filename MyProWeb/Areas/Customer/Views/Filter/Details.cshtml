@@ -38,7 +38,7 @@
                         </div>
 
                     </div>
-                    <p><button type="button" data-id="@Model.Idpro" class="ajax-add-to-cart buy-now btn  btn-outline-success">Add To Cart</button>
+                    <p><button type="button" data-id="@Model.Idpro" class="ajax-add-to-cartt buy-now btn  btn-outline-success">Add To Cart</button>
                         <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary text-center">Home</a>
                         <a asp-area="Customer" asp-controller="Filter" asp-action="Index" class="btn btn-outline-secondary text-center">Back</a>
                     </p>
@@ -48,41 +48,7 @@
         </div>
     </div>
 </div>
-@section Scripts {
-                <script>
-                $(document).ready(function () {
-                    $(".ajax-add-to-cart").click(function(){
-                var quantity = $(this).closest('form').find('[name="SoLuong"]').val();
-
-                        $.ajax({
-                            url: "/customer/Myproweb/cart/AddToCart",
-                            data: {
-                                id: $(this).data("id"),
-                                SoLuong: quantity,
-                                type: "ajax"
-                            },
-                            success: function(data){
-                                Swal.fire({
-                            
-                                    icon: "success",
-                                    title: "Add To Cart Successfully!",
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                            },
-                            error: function(){
-                                Swal.fire({
-                                    icon: "error",
-                                    title: "Failed!",
-                                    text: "Something went wrong!",
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                            }
-                        });
-                    });
-                });
-            </script>
+@section Scripts {           
 
     @{
 

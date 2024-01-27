@@ -10,23 +10,17 @@
     <h4>Product</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NamePro)
-        </dt>
-        <dd class = "col-sm-10">
+        
+        <dd style="position: center; font-size: 30px" class="col-sm-10">
             @Html.DisplayFor(model => model.NamePro)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
+        
+        <dd style="position: center; font-size: 30px" class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImgPro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImgPro)
+       
+        <dd class="col-sm-10">
+            <img src="@Model.ImgPro" alt="@(Model.NamePro)" asp-append-version="true" style="border-radius:20px ;width: 150px; height: 150px;">
         </dd>
      
     </dl>

@@ -82,13 +82,14 @@ namespace MyProWeb.Areas.Customer.Controllers
                
                 if (item != null)
                 {
-                    Carts.Remove(item);
+                    myCart.Remove(item);
                     HttpContext.Session.Set("giohang", myCart);
                 }
                 return Json(new { success = true });
             }
             else
             {
+                
                 // Xử lý cho các loại yêu cầu khác
                 return RedirectToAction("Index"); // Hoặc chuyển hướng đến trang khác
             }

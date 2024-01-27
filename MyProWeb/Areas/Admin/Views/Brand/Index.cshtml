@@ -61,7 +61,7 @@
                                     <td>@a.Idbrand</td>
                                     <td>@(a.NameBrand ?? "Tên không có sẵn")</td>
 
-                                    <td><img style="width: 80px; height: 80px;" src="@a.ImgBrand" alt="@a.NameBrand"></td>
+                                    <td><img style="border-radius:20px; width: 80px; height: 80px;" src="@a.ImgBrand" alt="@a.NameBrand"></td>
                                     <td>
                                         <a asp-controller="Brand" asp-action="Edit" asp-route-id="@a.Idbrand" class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>Update</a>
                                         <a asp-controller="Brand" asp-action="Delete" asp-route-id="@a.Idbrand" class="btn btn-danger"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Delete</a>
