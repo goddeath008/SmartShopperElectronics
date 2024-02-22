@@ -75,6 +75,15 @@ namespace MyProWeb
             // Add Razor Pages
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
+            //add google config
+            builder.Services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    var gg = builder.Configuration.GetSection("Authentication:Google");
+                    options.ClientId = gg["ClientId"];
+                    options.ClientSecret = gg["ClientSecret"];
+                    options.CallbackPath = "/loginGoogle";
+                });
 
             // Configure Identity Options
             builder.Services.Configure<IdentityOptions>(options =>
