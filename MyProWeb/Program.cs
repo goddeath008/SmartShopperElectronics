@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -72,6 +72,7 @@ namespace MyProWeb
             builder.Services.AddSingleton<IEmailSender, SendMailService>();
 
 
+
             // Add Razor Pages
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
@@ -83,10 +84,19 @@ namespace MyProWeb
                     options.ClientId = gg["ClientId"];
                     options.ClientSecret = gg["ClientSecret"];
                     options.CallbackPath = "/loginGoogle";
+                })
+                .AddFacebook(facebookOptions =>
+                {
+                    // Đọc cấu hình
+                    var fb = builder.Configuration.GetSection("Authentication:Facebook");
+                    facebookOptions.AppId = fb["AppId"];
+                    facebookOptions.AppSecret = fb["AppSecret"];
+                    // Thiết lập đường dẫn Facebook chuyển hướng đến
+                    facebookOptions.CallbackPath = "/loginFacebook";
                 });
 
-            // Configure Identity Options
-            builder.Services.Configure<IdentityOptions>(options =>
+                    // Configure Identity Options
+                    builder.Services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
                 options.Password.RequireDigit = false;

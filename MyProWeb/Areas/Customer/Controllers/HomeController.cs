@@ -28,7 +28,7 @@ namespace MyProWeb.Areas.Customer.Controllers
                 .ToList();
             return View(list);
         }
-        public IActionResult test()
+        public ActionResult test()
         {
             return View();
         }
