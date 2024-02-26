@@ -1,4 +1,5 @@
-﻿namespace MyProWeb.Models.Domain
+﻿
+namespace MyProWeb.Models.Domain
 {
     public class CartModel
     {
@@ -8,5 +9,10 @@
         public double DonGia { get; set; }
         public int Quantity{ get; set; }
         public double Total => DonGia*Quantity;
+
+        public void UpdateQuantity(int newQuantity)
+        {
+            Quantity = newQuantity;
+        }
     }
 }

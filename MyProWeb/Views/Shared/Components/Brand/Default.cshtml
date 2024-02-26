@@ -5,7 +5,7 @@
 }
 @model IEnumerable<MyProWeb.Models.Brand>
 
-<a href="brands.html">
+<a >
     Brands<span class="uk-margin-xsmall-left"
                 uk-icon="icon: chevron-down; ratio: .75;"></span>
 </a>
@@ -19,7 +19,10 @@
                 <li>
                     <div class="tm-ratio tm-ratio-4-3">
                         <a class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                           href="#"
+                           asp-area="Customer"
+                           asp-controller="Filter"
+                           asp-action="SPTheoBrand"
+                           asp-route-loaiBrand="@item.Idbrand"
                            title="@item.NameBrand">
                             <figure class="tm-media-box-wrap">
                                 <img src="@item.ImgBrand"

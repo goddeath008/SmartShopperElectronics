@@ -1,15 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model IEnumerable<MyProWeb.Models.Domain.CartModel>
-
-
+﻿@model IEnumerable<MyProWeb.Models.Domain.CartModel>
 
 <div class="text-center">
     <div class="site-section">
         <div class="container">
+            <div class="col-md-12">
+                <h1 style="font-size:100px">Cart</h1>
+            </div>
+            <hr />
             <div class="row mb-5">
                 <form class="col-md-12" method="post">
                     <div class="site-blocks-table">
@@ -19,9 +16,9 @@
                                     <th class="product-thumbnail">Image</th>
                                     <th class="product-name">Product</th>
                                     <th class="product-price">Price</th>
-                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-quantity" style="width:100px">Quantity</th>
                                     <th class="product-total">Total</th>
-                                    <th class="product-remove">Remove</th>
+                                    <th class="product-remove">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,21 +33,13 @@
                                         </td>
                                         <td>@item.DonGia</td>
                                         <td>
-                                            <div class="input-group mb-3" style="max-width: 120px;">
-                                                <div class="input-group-prepend">
-                                                    <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                                                </div>
-                                                <input type="text" class="form-control text-center" value="@item.Quantity" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                                                </div>
-                                            </div>
-
+                                            <input id="soluongsp_@item.IdProduct" type="number" class="form-control" value="@item.Quantity" />
                                         </td>
                                         <td>@item.Total</td>
                                         <td>
                                             <!-- Trong view hiển thị giỏ hàng -->
                                             <button type="button" class="ajax-remove btn btn-danger " data-id="@item.IdProduct">Remove</button>
+                                            <button type="button" class="ajax-update btn btn-success" data-id="@item.IdProduct">Update</button>
                                         </td>
                                     </tr>
                                 }
@@ -63,9 +52,6 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="row mb-5">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
-                        </div>
                         <div class="col-md-6">
                             <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
                         </div>
@@ -96,7 +82,7 @@
                                     <span class="text-black">Subtotal</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
+                                    <strong class="text-black">@ViewData["FormattedTotalAmount"]</strong>
                                 </div>
                             </div>
                             <div class="row mb-5">
@@ -104,13 +90,12 @@
                                     <span class="text-black">Total</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
+                                    <strong class="text-black">@ViewData["FormattedTotalAmount"]</strong>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button>
+                                    <a asp-controller="CheckOut" asp-action="Index" class="btn btn-outline-primary btn-lg py-3 btn-block" >Proceed To Checkout</a>
                                 </div>
                             </div>
                         </div>
@@ -119,12 +104,9 @@
             </div>
         </div>
     </div>
-
 </div>
 
-
 @section Scripts {
-    <!-- Trong phần Scripts của view -->
     <script>
         $(document).ready(function () {
             $(".ajax-remove").click(function () {
@@ -136,7 +118,6 @@
                     },
                     success: function (data) {
                         Swal.fire({
-
                             icon: "success",
                             title: "Deleted!",
                             showConfirmButton: false,
@@ -144,7 +125,7 @@
                         });
                         setTimeout(function () {
                             location.reload();
-                        }, 500);
+                        }, 200);
                     },
                     error: function () {
                         Swal.fire({
@@ -157,11 +138,32 @@
                     }
                 });
             });
+
+            $(".ajax-update").click(function () {
+                var id = $(this).data("id");
+                var quantity = $("#soluongsp_" + id).val();
+
+                $.ajax({
+                    url: "/customer/Myproweb/cart/Update_Quantity",
+                    type: "POST",
+                    data: { id: id, type: "ajax", sl: quantity },
+                    success: function (data) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Updated!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 200);
+                    }
+                });
+            });
         });
     </script>
 
     @{
-
         <partial name="_ValidationScriptsPartial" />
     }
 }

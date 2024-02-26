@@ -9,8 +9,9 @@
     @foreach(var item in Model)
     {
         <div>
-            <a class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large"
-               href="subcategory.html">
+            <a asp-area="Customer" asp-controller="Filter" asp-action="SPTheoLoai"
+               asp-route-loaiSp="@item.Idcate" class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large"
+               >
                 <div class="tm-ratio tm-ratio-4-3">
                     <div class="tm-media-box">
                         <figure class="tm-media-box-wrap">

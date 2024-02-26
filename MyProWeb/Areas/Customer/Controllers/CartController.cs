@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyProWeb.Data;
 using MyProWeb.Helpers;
+using MyProWeb.Models;
 using MyProWeb.Models.Domain;
+using System.Globalization;
 
 namespace MyProWeb.Areas.Customer.Controllers
 {
@@ -29,15 +31,25 @@ namespace MyProWeb.Areas.Customer.Controllers
         }
         public IActionResult Index()
         {
+            var totalAmount = 0.0;
             if (Carts != null && Carts.Any())
             {
                 ViewData["CartCount"] = Carts.Count();
+
+               
+                totalAmount = Carts.Sum(item => item.DonGia * item.Quantity);
             }
             else
             {
                 ViewData["CartCount"] = 0;
             }
 
+          
+            var formattedTotalAmount = totalAmount.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"));
+
+            // Truyền tổng số tiền đã định dạng vào view
+            ViewData["FormattedTotalAmount"] = formattedTotalAmount;
+           
             return View(Carts);
         }
 
@@ -73,6 +85,25 @@ namespace MyProWeb.Areas.Customer.Controllers
             return RedirectToAction("Index");
         }
        
+        public IActionResult Update_Quantity(int id, string type, int sl)
+        {
+            var myCart = Carts;
+            var item = myCart.SingleOrDefault(p => p.IdProduct == id);
+
+            if (type == "ajax")
+            {
+                if (item != null)
+                {
+                    item.Quantity = sl; // Cập nhật số lượng sản phẩm
+                }
+
+                HttpContext.Session.Set("giohang", myCart);
+                return Json(new { success = true });
+            }
+
+            return Json(new { success = true });
+        }
+
         public IActionResult RemoveFromCart(int id, string type)
         {
             var myCart = Carts;
